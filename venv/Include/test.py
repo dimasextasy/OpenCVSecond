@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
 
-video = cv2.VideoCapture(0)
+video = cv2.VideoCapture("PANDAE.mp4")
 
 _, first_frame = video.read()
-x = 125
-y = 239
+x = 275
+y = 236
 width = 175
-height = 70
+height = 100
 roi = first_frame[y: y + height, x: x + width]
 hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 roi_hist = cv2.calcHist([hsv_roi], [0], None, [180], [0, 180])

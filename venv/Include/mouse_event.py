@@ -9,8 +9,8 @@ def mouse_drawing(event, x, y, flags, params):
 
 
 
-cap = cv2.VideoCapture("480.mp4")
-_, first_frame = cap.read()
+cap = cv2.VideoCapture("PANDAE.mp4")
+_, first_frame = cap.read(5)
 cv2.namedWindow("first frame")
 cv2.setMouseCallback("first frame", mouse_drawing)
 
