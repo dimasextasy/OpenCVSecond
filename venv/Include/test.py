@@ -1,18 +1,19 @@
 import cv2
 import numpy as np
 
-video = cv2.VideoCapture("PANDAE.mp4")
+video = cv2.VideoCapture(0)
 
 _, first_frame = video.read()
-x = 275
-y = 236
-width = 175
-height = 100
+x = 210
+y = 180
+width = 150
+height = 150
 roi = first_frame[y: y + height, x: x + width]
 hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 roi_hist = cv2.calcHist([hsv_roi], [0], None, [180], [0, 180])
-roi_hist = cv2.normalize(roi_hist, roi_hist, 0, 255, cv2.NORM_MINMAX)
+#roi_hist = cv2.normalize(roi_hist, roi_hist, 0, 255, cv2.NORM_MINMAX)
 print(roi_hist)
+
 
 term_criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
 
