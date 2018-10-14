@@ -1,7 +1,15 @@
 import cv2
 import numpy as np
 
+<<<<<<< HEAD
 video = cv2.VideoCapture("car1.mp4")
+=======
+<<<<<<< Updated upstream
+video = cv2.VideoCapture(0)
+=======
+video = cv2.VideoCapture("treangle1.mp4")
+>>>>>>> Stashed changes
+>>>>>>> 4bce5266fcab2916491279ce929245e705203f26
 
 _, first_frame = video.read()
 x = 290
