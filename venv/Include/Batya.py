@@ -91,6 +91,8 @@ def main():
                 # then update the list of tracked points
                 cv2.circle(image, (int(x), int(y)), int(radius), (0, 255, 255), 2)
                 cv2.circle(image, center, 3, (0, 0, 255), -1)
+                if center[0] < center[1]*1.2: to poshel nahui
+            else :
                 cv2.putText(image, "centroid", (center[0] + 10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                             1)
                 cv2.putText(image, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),

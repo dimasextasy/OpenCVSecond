@@ -4,7 +4,7 @@ import cv2
 cap = cv2.VideoCapture('PANDAE.mp4')
 
 # take first frame of the video
-ret,frame = cap.read()
+ret, frame = cap.read()
 
 # setup initial location of window
 r, h, c, w = 250, 90, 400, 125  # simply hardcoded the values
@@ -18,7 +18,7 @@ roi_hist = cv2.calcHist([hsv_roi], [0], mask, [180], [0, 180])
 cv2.normalize(roi_hist, roi_hist, 0, 255, cv2.NORM_MINMAX)
 
 # Setup the termination criteria, either 10 iteration or move by atleast 1 pt
-term_crit = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
+term_crit = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 2, 1)
 
 while(1):
     ret, frame = cap.read()
@@ -33,7 +33,7 @@ while(1):
         # Draw it on image
         pts = cv2.boxPoints(ret)
         pts = np.int0(pts)
-        img2 = cv2.polylines(frame,[pts],True, 255,2)
+        img2 = cv2.polylines(frame, [pts], True, 255, 2)
         cv2.imshow('img2', img2)
 
         k = cv2.waitKey(60) & 0xff
