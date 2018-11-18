@@ -6,6 +6,8 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import imutils
+from imutils import paths
 
 
 
@@ -54,16 +56,21 @@ def get_trackbar_values(range_filter):
             values.append(v)
     return values
 
+def distance_to_camera(knownWidth, focalLength, perWidth):
+	# compute and return the distance from the maker to the camera
+	return (knownWidth * focalLength) / perWidth
 
 def main():
     args = get_arguments()
-
+    Rfisrt = 405
+    Dfirst = 7
     range_filter = args['filter'].upper()
 
     camera = cv2.VideoCapture("Test.mp4")
 
     fig = plt.figure()
     setup_trackbars(range_filter)
+
     while True:
         if args['webcam']:
             ret, image = camera.read()
@@ -104,6 +111,8 @@ def main():
                 # then update the list of tracked points
                 cv2.circle(image, (int(x), int(y)), int(radius), (0, 255, 255), 2)
                 cv2.circle(image, center, 3, (0, 0, 255), -1)
+                distance = Rfisrt / int(radius) * Dfirst
+                z.append(distance)
                 cv2.putText(image, "centroid", (center[0] + 10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                             1)
                 cv2.putText(image, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),
@@ -116,7 +125,6 @@ def main():
 
         s.append(center[0])
         d.append(center[1])
-        z = 100.00
         mpl.rcParams['legend.fontsize'] = 10
         ax = fig.gca(projection='3d')
         ax.plot(s, d, z)
