@@ -30,7 +30,7 @@ def main():
 	# construct the argument parse and parse the arguments
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-v", "--video",
-		help = "path to the (optional) video file")
+		help = "pandae.mp4")
 	args = vars(ap.parse_args())
 
 	# grab the reference to the current frame, list of ROI

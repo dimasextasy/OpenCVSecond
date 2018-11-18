@@ -1,20 +1,34 @@
 import cv2
 import argparse
 import numpy as np
+from matplotlib import mlab
+import pylab
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+
 
 
 def callback(value):
     pass
 
+s=[]
+d=[]
+z=[]
 
 def setup_trackbars(range_filter):
     cv2.namedWindow("Trackbars", 0)
-
     for i in ["MIN", "MAX"]:
         v = 0 if i == "MIN" else 255
-
         for j in range_filter:
-            cv2.createTrackbar("%s_%s" % (j, i), "Trackbars", v, 255, callback)
+            cv2.createTrackbar("%s_%s" % (j, i), "Trackbars", v , 255, callback)
+            cv2.setTrackbarPos('H_MIN', "Trackbars", 70)
+            cv2.setTrackbarPos('H_MAX', "Trackbars", 110)
+
+
+
+
 
 
 def get_arguments():
@@ -46,10 +60,10 @@ def main():
 
     range_filter = args['filter'].upper()
 
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture("Test.mp4")
 
+    fig = plt.figure()
     setup_trackbars(range_filter)
-
     while True:
         if args['webcam']:
             ret, image = camera.read()
@@ -84,7 +98,6 @@ def main():
             ((x, y), radius) = cv2.minEnclosingCircle(c)
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-
             # only proceed if the radius meets a minimum size
             if radius > 10:
                 # draw the circle and centroid on the frame,
@@ -101,8 +114,20 @@ def main():
         cv2.imshow("Thresh", thresh)
         cv2.imshow("Mask", mask)
 
+        s.append(center[0])
+        d.append(center[1])
+        z = 100.00
+        mpl.rcParams['legend.fontsize'] = 10
+        ax = fig.gca(projection='3d')
+        ax.plot(s, d, z)
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
+
+
         if cv2.waitKey(1) & 0xFF is ord('q'):
-            break
+           plt.show()
+           break
 
 
 if __name__ == '__main__':

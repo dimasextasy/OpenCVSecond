@@ -16,8 +16,8 @@ s=[]
 d=[]
 
 
-cap = cv2.VideoCapture("red_panda_snow.mp4")
 
+cap = cv2.VideoCapture("pandae.mp4")
 
 term_criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
 
@@ -29,20 +29,29 @@ while True:
     ret, track_window = cv2.CamShift(mask, (x, y, width, height), term_criteria)
 
     #print(ret)
-    s.append(track_window[0])
-    d.append(track_window[1])
-    pylab.plot(s,d)
+
+
+
     print(track_window)
-    pylab.plot(track_window[0],track_window[1])
+    #pylab.plot(track_window[0],track_window[1])
+
+
     pts = cv2.boxPoints(ret)
     pts = np.int0(pts)
     cv2.polylines(frame, [pts], True, (255, 0, 0), 2)
     cv2.imshow("mask", mask)
     cv2.imshow("Frame", frame)
-    #cv2.imshow("Roi",roi)
+    s.append(pts[0][0])
+    d.append(pts[0][1])
+    pylab.plot(s, d)
+
+
+
+
     if len(s)== 100 : pylab.show()
     key = cv2.waitKey(1)
     print(key)
+
     #pylab.show()
 
 
