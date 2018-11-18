@@ -1,7 +1,6 @@
 import cv2
 import argparse
 import numpy as np
-from matplotlib import mlab
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
@@ -10,27 +9,23 @@ import imutils
 from imutils import paths
 
 
-
-
 def callback(value):
     pass
 
-s=[]
-d=[]
-z=[]
+
+s = []
+d = []
+z = []
+
 
 def setup_trackbars(range_filter):
     cv2.namedWindow("Trackbars", 0)
     for i in ["MIN", "MAX"]:
         v = 0 if i == "MIN" else 255
         for j in range_filter:
-            cv2.createTrackbar("%s_%s" % (j, i), "Trackbars", v , 255, callback)
+            cv2.createTrackbar("%s_%s" % (j, i), "Trackbars", v, 255, callback)
             cv2.setTrackbarPos('H_MIN', "Trackbars", 70)
             cv2.setTrackbarPos('H_MAX', "Trackbars", 110)
-
-
-
-
 
 
 def get_arguments():
@@ -56,9 +51,11 @@ def get_trackbar_values(range_filter):
             values.append(v)
     return values
 
+
 def distance_to_camera(knownWidth, focalLength, perWidth):
-	# compute and return the distance from the maker to the camera
-	return (knownWidth * focalLength) / perWidth
+    # compute and return the distance from the maker to the camera
+    return (knownWidth * focalLength) / perWidth
+
 
 def main():
     args = get_arguments()
@@ -132,11 +129,11 @@ def main():
         ax.set_ylabel('y')
         ax.set_zlabel('z')
 
-
         if cv2.waitKey(1) & 0xFF is ord('q'):
-           plt.show()
-           break
+           # plt.show()
+            break
 
 
 if __name__ == '__main__':
     main()
+    plt.show()
