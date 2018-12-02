@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import imutils
 from imutils import paths
+import math
+
 
 
 def callback(value):
@@ -16,6 +18,7 @@ def callback(value):
 s = []
 d = []
 z = []
+z1 = []
 
 
 def setup_trackbars(range_filter):
@@ -63,8 +66,11 @@ def main():
     Dfirst = 7
     range_filter = args['filter'].upper()
 
-    camera = cv2.VideoCapture("Test.mp4")
+    widthRound = 379
+    pixelpersm = widthRound / 7
 
+    #camera = cv2.VideoCapture("lft1.mp4")
+    camera = cv2.VideoCapture(0)
     fig = plt.figure()
     setup_trackbars(range_filter)
 
@@ -110,6 +116,7 @@ def main():
                 cv2.circle(image, center, 3, (0, 0, 255), -1)
                 distance = Rfisrt / int(radius) * Dfirst
                 z.append(distance)
+
                 cv2.putText(image, "centroid", (center[0] + 10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255),
                             1)
                 cv2.putText(image, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),
@@ -119,18 +126,26 @@ def main():
         cv2.imshow("Original", image)
         cv2.imshow("Thresh", thresh)
         cv2.imshow("Mask", mask)
-
-        s.append(center[0])
-        d.append(center[1])
+        s.append(center[0] / pixelpersm)
+        d.append(center[1] / pixelpersm)
         mpl.rcParams['legend.fontsize'] = 10
         ax = fig.gca(projection='3d')
+        ax.set_xlim([0, 15])
+        ax.set_ylim([0, 20])
+        ax.set_zlim([15, 25])
         ax.plot(s, d, z)
         ax.set_xlabel('x')
         ax.set_ylabel('y')
         ax.set_zlabel('z')
 
         if cv2.waitKey(1) & 0xFF is ord('q'):
-           # plt.show()
+            #MaxX = max(s)
+            #MinX = min(s)
+            #distVGRMAX = (MaxX /54.85)*2.29
+            #distVGRMIN = (MinX/54.85)*2.29
+            #distITOG = distVGRMAX - distVGRMIN
+            #print(distITOG)
+            plt.show()
             break
 
 

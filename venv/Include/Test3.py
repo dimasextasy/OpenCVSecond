@@ -17,7 +17,7 @@ d=[]
 
 
 
-cap = cv2.VideoCapture("pandae.mp4")
+cap = cv2.VideoCapture(0)
 
 term_criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1)
 
